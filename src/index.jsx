@@ -5,35 +5,10 @@ import { Canvas, useFrame, extend } from '@react-three/fiber'
 import Controls from './components/Controls'
 import './styles.css'
 import { AxesHelper } from './helper'
+import { Terrain } from './components'
 import { OrbitControls, TransformControls } from 'three-stdlib'
 
 extend({ OrbitControls, TransformControls })
-
-function Terrain() {
-  const planeRef = useRef()
-
-  useFrame(() => {
-    // 如果需要基于帧的动画或更新，可以在这里添加代码
-  })
-
-  return (
-    <mesh ref={planeRef}>
-      {/* <planeGeomery args={[900, 1200]} /> */}
-      {/* <primitive object={new THREE.BoxGeometry(1, 1, 1)} /> */}
-      <sphereGeometry args={[1, 32]} />
-
-      <meshStandardMaterial
-        color={[192, 162, 97]} // 土黄色，你可以使用十六进制、RGB或其他颜色格式
-        // color={rgb(192, 162, 97)} // 土黄色，你可以使用十六进制、RGB或其他颜色格式
-        // color={new Color('rgb(192, 162, 97)')} // 土黄色，你可以使用十六进制、RGB或其他颜色格式
-        metalness={0} // 非金属材质
-        roughness={0.5} // 粗糙度，控制反光程度
-      />
-      {/* 如果你想让地形有高度，你可能需要自定义一个更复杂的几何体或使用ShaderMaterial */}
-      {/* 但对于简单的矩形地形，通常高度是通过相机的位置和缩放来感知的 */}
-    </mesh>
-  )
-}
 
 // // Add types to ThreeElements elements so primitives pick up on it
 // declare module '@react-three/fiber' {
@@ -42,21 +17,32 @@ function Terrain() {
 //   }
 // }
 
+const createGridPositionArray = (a, b) => {
+  // 初始化一个12x9的空数组
+  const grid = []
+  // 使用嵌套循环填充坐标值
+  for (let x = 0; x < a; x++) {
+    for (let y = 0; y < b; y++) {
+      // 这里我们将每个坐标值设置为 [x, y]
+      grid.push([x, y])
+    }
+  }
+
+  return grid
+}
+
+const posArr = createGridPositionArray(12, 9)
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Canvas camera={{ position: [15, 10, 0] }}>
+    <Canvas camera={{ position: [15, 10, 15] }}>
       <AxesHelper />
       <Controls />
-      <ambientLight intensity={1} />
-      <pointLight position={[0, 30, 0]} />
-      {/* <mesh position={[0, 1, 1]}>
-        <boxGeometry args={[3, 3, 9]} />
-        <meshStandardMaterial color="hotpink" metalness={0.5} roughness={0.5} />
-      </mesh> */}
-      <mesh position={[-10, 1, 1]}>
-        <boxGeometry args={[3, 3, 9]} />
-        <meshStandardMaterial color={'#c0a261'} metalness={0} roughness={0.5} />
-      </mesh>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[0, 10, 0]} intensity={100} />
+
+      {posArr.map(([x, z], i) => (
+        <Terrain position={[x, 0, z]} key={i} />
+      ))}
     </Canvas>
   </StrictMode>
 )
