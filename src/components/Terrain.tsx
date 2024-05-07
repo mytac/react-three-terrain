@@ -12,7 +12,12 @@ function Terrain(props: Props) {
   return (
     <mesh position={position}>
       <boxGeometry args={[1, 0.5 + heightOffset, 1]} />
-      <meshStandardMaterial color={'#c0a261'} metalness={0} roughness={0.5} />
+      <meshStandardMaterial
+        flatShading
+        color={'#c0a261'}
+        metalness={0}
+        roughness={0.5}
+      />
     </mesh>
   )
 }

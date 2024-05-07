@@ -5,7 +5,7 @@ import { Canvas, useFrame, extend } from '@react-three/fiber'
 import Controls from './components/Controls'
 import './styles.css'
 import { AxesHelper } from './helper'
-import { Terrain } from './components'
+import { Terrain, EllipticalPlatform, Boxes } from './components'
 import { OrbitControls, TransformControls } from 'three-stdlib'
 
 extend({ OrbitControls, TransformControls })
@@ -32,6 +32,8 @@ const createGridPositionArray = (a, b) => {
 }
 
 const posArr = createGridPositionArray(12, 9)
+// const posArr = createGridPositionArray(1, 1)
+console.log('posArr', posArr)
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Canvas camera={{ position: [15, 10, 15] }}>
@@ -39,7 +41,9 @@ createRoot(document.getElementById('root')).render(
       <Controls />
       <ambientLight intensity={0.5} />
       <pointLight position={[0, 10, 0]} intensity={100} />
-
+      {posArr.map(([x, z], i) => (
+        <Boxes position={[x, 1, z]} key={i} />
+      ))}
       {posArr.map(([x, z], i) => (
         <Terrain position={[x, 0, z]} key={i} />
       ))}

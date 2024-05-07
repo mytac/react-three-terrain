@@ -1,2 +1,5 @@
 import Terrain from './Terrain'
-export { Terrain }
+import EllipticalPlatform from './EllipticalPlatform'
+import Boxes from './Boxes'
+
+export { Terrain, EllipticalPlatform, Boxes }
