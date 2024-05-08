@@ -39,7 +39,6 @@ const posArr = createGridPositionArray(
   CONFIG.GRID_MATRIX_LENGTH[1]
 )
 // const posArr = createGridPositionArray(1, 1)
-console.log('posArr', posArr)
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>

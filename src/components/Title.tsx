@@ -11,7 +11,7 @@ interface Props {
   end: [a: number, b: number, c: number]
 }
 
-const { FONT_SIZE } = CONFIG
+const { FONT_SIZE, LINE_COLOR } = CONFIG
 const WIDTH = CONFIG.GRAM_WIDTH
 
 function Title(props: Props) {
@@ -29,7 +29,7 @@ function Title(props: Props) {
         </Billboard>
         <Line
           points={[start, afterOffsetPosition]}
-          color="white"
+          color={LINE_COLOR}
           lineWidth={1}
         />
       </mesh>
