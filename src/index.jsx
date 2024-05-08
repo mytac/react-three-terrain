@@ -3,10 +3,11 @@ import * as THREE from 'three'
 import { createRoot } from 'react-dom/client'
 import { Canvas, useFrame, extend } from '@react-three/fiber'
 import Controls from './components/Controls'
-import './styles.css'
+import { OrbitControls, TransformControls } from 'three-stdlib'
 import { AxesHelper } from './helper'
 import { Terrain, EllipticalPlatform, Boxes } from './components'
-import { OrbitControls, TransformControls } from 'three-stdlib'
+import * as CONFIG from './CONFIG'
+import './styles.css'
 
 extend({ OrbitControls, TransformControls })
 
@@ -17,6 +18,8 @@ extend({ OrbitControls, TransformControls })
 //   }
 // }
 
+const { UNIT } = CONFIG
+
 const createGridPositionArray = (a, b) => {
   // 初始化一个12x9的空数组
   const grid = []
@@ -24,19 +27,22 @@ const createGridPositionArray = (a, b) => {
   for (let x = 0; x < a; x++) {
     for (let y = 0; y < b; y++) {
       // 这里我们将每个坐标值设置为 [x, y]
-      grid.push([x, y])
+      grid.push([x * UNIT, y * UNIT])
     }
   }
 
   return grid
 }
 
-const posArr = createGridPositionArray(12, 9)
+const posArr = createGridPositionArray(
+  CONFIG.GRID_MATRIX_LENGTH[0],
+  CONFIG.GRID_MATRIX_LENGTH[1]
+)
 // const posArr = createGridPositionArray(1, 1)
 console.log('posArr', posArr)
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Canvas camera={{ position: [15, 10, 15] }}>
+    <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
       <AxesHelper />
       <Controls />
       <ambientLight intensity={0.5} />
