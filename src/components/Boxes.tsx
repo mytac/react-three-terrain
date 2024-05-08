@@ -23,8 +23,8 @@ function Boxes(props: Props) {
   const isEdge = useMemo(() => {
     if (x === 0 || z === 0) return true
     if (
-      x === CONFIG.GRID_MATRIX_LENGTH[1] - 1 ||
-      z === CONFIG.GRID_MATRIX_LENGTH[0] - 1
+      x === (CONFIG.GRID_MATRIX_LENGTH[1] - 1) * UNIT ||
+      z === (CONFIG.GRID_MATRIX_LENGTH[0] - 1) * UNIT
     )
       return true
     return false
