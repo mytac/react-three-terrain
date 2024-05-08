@@ -1,7 +1,8 @@
 import React, { useRef, useLayoutEffect, useMemo } from 'react'
-import { Billboard, Text, TrackballControls } from '@react-three/drei'
+import { Billboard, Text, TrackballControls, Line } from '@react-three/drei'
 import { useFrame, Canvas } from '@react-three/fiber'
 // import { noise } from './perlin'
+import Title from './Title'
 import * as CONFIG from '../CONFIG'
 
 interface Props {
@@ -20,32 +21,9 @@ function Boxes(props: Props) {
   const [x, y, z] = position
   const [a, b, c] = heightOffset
 
-  const isEdge = useMemo(() => {
-    if (x === 0 || z === 0) return true
-    if (
-      x === (CONFIG.GRID_MATRIX_LENGTH[1] - 1) * UNIT ||
-      z === (CONFIG.GRID_MATRIX_LENGTH[0] - 1) * UNIT
-    )
-      return true
-    return false
-  }, [x, z])
-
-  const calculateTextPosition = () => {
-    //
-  }
-
-  const showText = isEdge
   const getY = (height: number) => height / 2 + UNIT / 4
-
   return (
     <group>
-      {showText && (
-        <mesh position={[0, 1, 0]}>
-          <Billboard position={[x, 1, z]}>
-            <Text fontSize={0.2}>hello</Text>
-          </Billboard>
-        </mesh>
-      )}
       <mesh position={[x - WIDTH, getY(a), z]}>
         <boxGeometry args={[WIDTH, a, WIDTH]} />
         <meshStandardMaterial
@@ -64,6 +42,7 @@ function Boxes(props: Props) {
           roughness={0.5}
         />
       </mesh>
+
       <mesh position={[x + WIDTH, getY(c), z]}>
         <boxGeometry args={[WIDTH, c, WIDTH]} />
         <meshStandardMaterial

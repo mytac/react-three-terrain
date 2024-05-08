@@ -5,7 +5,7 @@ import { Canvas, useFrame, extend } from '@react-three/fiber'
 import Controls from './components/Controls'
 import { OrbitControls, TransformControls } from 'three-stdlib'
 import { AxesHelper } from './helper'
-import { Terrain, EllipticalPlatform, Boxes } from './components'
+import { Terrain, EllipticalPlatform, Boxes, Title } from './components'
 import * as CONFIG from './CONFIG'
 import './styles.css'
 
@@ -47,12 +47,17 @@ createRoot(document.getElementById('root')).render(
       <Controls />
       <ambientLight intensity={0.5} />
       <pointLight position={[0, 10, 0]} intensity={100} />
-      {posArr.map(([x, z], i) => (
-        <Boxes position={[x, 1, z]} key={i} />
-      ))}
-      {posArr.map(([x, z], i) => (
-        <Terrain position={[x, 0, z]} key={i} />
-      ))}
+      {posArr.map(([x, z], i) => {
+        const boxPosition = [x, 1, z]
+        const terrainPosition = [x, 0, z]
+        return (
+          <group key={i}>
+            <Boxes position={boxPosition} />
+            <Terrain position={terrainPosition} />
+            <Title text="hello" start={terrainPosition} end={boxPosition} />
+          </group>
+        )
+      })}
     </Canvas>
   </StrictMode>
 )
