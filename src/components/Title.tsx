@@ -15,7 +15,8 @@ const { FONT_SIZE, LINE_COLOR } = CONFIG
 const WIDTH = CONFIG.GRAM_WIDTH
 
 function Title(props: Props) {
-  const { start, end } = props
+  if (!CONFIG.SHOW_TITLE) return null
+  const { start, end, text } = props
   const [x, y, z] = start
   const [a, b, c] = end
 
@@ -25,7 +26,7 @@ function Title(props: Props) {
     <group>
       <mesh position={[0, 1, 0]}>
         <Billboard position={afterOffsetPosition}>
-          <Text fontSize={FONT_SIZE}>hello 1</Text>
+          <Text fontSize={FONT_SIZE}>{text}</Text>
         </Billboard>
         <Line
           points={[start, afterOffsetPosition]}

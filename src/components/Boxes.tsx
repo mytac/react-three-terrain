@@ -14,6 +14,8 @@ const { UNIT } = CONFIG
 const WIDTH = CONFIG.GRAM_WIDTH
 
 function Boxes(props: Props) {
+  if (!CONFIG.SHOW_GRAM) return null
+
   const {
     position,
     heightOffset = [Math.random(), Math.random(), Math.random()]
