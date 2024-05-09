@@ -6,6 +6,7 @@ import Controls from './components/Controls'
 import { OrbitControls, TransformControls } from 'three-stdlib'
 import { AxesHelper } from './helper'
 import { Terrain, EllipticalPlatform, Boxes, Title } from './components'
+import CanvasWrapper from './Canvas'
 import * as CONFIG from './CONFIG'
 import './styles.css'
 
@@ -18,7 +19,7 @@ extend({ OrbitControls, TransformControls })
 //   }
 // }
 
-const { UNIT } = CONFIG
+const { UNIT, POINT_LIGHT_INTENSITY, PONIT_LIGHT_HEIGHT } = CONFIG
 
 const createGridPositionArray = (a, b) => {
   // 初始化一个12x9的空数组
@@ -41,11 +42,15 @@ const posArr = createGridPositionArray(
 // const posArr = createGridPositionArray(1, 1)
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
+    <CanvasWrapper />
+    {/* <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
       <AxesHelper />
       <Controls />
       <ambientLight intensity={0.5} />
-      <pointLight position={[0, 10, 0]} intensity={100} />
+      <pointLight
+        position={[0, PONIT_LIGHT_HEIGHT, 0]}
+        intensity={POINT_LIGHT_INTENSITY}
+      />
       {posArr.map(([x, z], i) => {
         const boxPosition = [x, 1, z]
         const terrainPosition = [x, 0, z]
@@ -57,6 +62,6 @@ createRoot(document.getElementById('root')).render(
           </group>
         )
       })}
-    </Canvas>
+    </Canvas> */}
   </StrictMode>
 )
