@@ -122,14 +122,13 @@ function CanvasInner(props: Props) {
       // }
 
       // register all updates
-      pos.needsUpdate = true
 
       const maxPos = filterMaxZWithoutAdjacentPoint(
         plane.attributes.position,
         mockData.length
       )
       setPos(maxPos)
-
+      pos.needsUpdate = true
       nor.needsUpdate = true
       uv.needsUpdate = true
     }
