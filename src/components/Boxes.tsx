@@ -10,7 +10,7 @@ interface Props {
   heightOffset: [a: number, b: number, c: number]
 }
 
-const { UNIT } = CONFIG
+const { UNIT, HEIGHT_WEIGHT } = CONFIG
 const WIDTH = CONFIG.GRAM_WIDTH
 
 function Boxes(props: Props) {
@@ -25,9 +25,9 @@ function Boxes(props: Props) {
 
   const getY = (height: number) => height / 2 + UNIT / 4
   return (
-    <group>
-      <mesh position={[x - WIDTH, getY(a), z]}>
-        <boxGeometry args={[WIDTH, a, WIDTH]} />
+    <group position={[x, y, z]} rotation={[-Math.PI / 2, 0, 0]}>
+      <mesh position={[-WIDTH, 0, 0]}>
+        <boxGeometry args={[WIDTH, a * HEIGHT_WEIGHT, WIDTH]} />
         <meshStandardMaterial
           flatShading
           color="red"
@@ -35,8 +35,9 @@ function Boxes(props: Props) {
           roughness={0.5}
         />
       </mesh>
-      <mesh position={[x, getY(b), z]}>
-        <boxGeometry args={[WIDTH, b, WIDTH]} />
+      <mesh>
+        {/* <mesh position={[x, getY(b), z]}> */}
+        <boxGeometry args={[WIDTH, b * HEIGHT_WEIGHT, WIDTH]} />
         <meshStandardMaterial
           flatShading
           color="yellow"
@@ -45,8 +46,8 @@ function Boxes(props: Props) {
         />
       </mesh>
 
-      <mesh position={[x + WIDTH, getY(c), z]}>
-        <boxGeometry args={[WIDTH, c, WIDTH]} />
+      <mesh position={[WIDTH, 0, 0]}>
+        <boxGeometry args={[WIDTH, c * HEIGHT_WEIGHT, WIDTH]} />
         <meshStandardMaterial
           flatShading
           color="green"
