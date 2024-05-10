@@ -1,4 +1,10 @@
-import React, { useRef, useLayoutEffect, useMemo, useEffect } from 'react'
+import React, {
+  useRef,
+  useLayoutEffect,
+  useMemo,
+  useEffect,
+  useState
+} from 'react'
 import * as THREE from 'three'
 import { createRoot } from 'react-dom/client'
 import { Canvas, useFrame, extend, useThree } from '@react-three/fiber'
@@ -7,13 +13,14 @@ import Controls from './components/Controls'
 import { OrbitControls, TransformControls } from 'three-stdlib'
 import { AxesHelper } from './helper'
 import { SimplexNoise } from 'three/addons/math/SimplexNoise.js'
+import { filterMaxZWithoutAdjacentPoint } from './utils'
 
 import {
   useTexture,
   GradientTexture,
   MeshDistortMaterial
 } from '@react-three/drei'
-import { Terrain, EllipticalPlatform, Boxes, Title } from './components'
+import { Terrain, Boxes, Title } from './components'
 import * as CONFIG from './CONFIG'
 import './styles.css'
 
@@ -31,32 +38,34 @@ const {
   POINT_LIGHT_INTENSITY,
   PONIT_LIGHT_HEIGHT,
   GRID_MATRIX_LENGTH,
-  SEGMENT
+  SEGMENT,
+  SHOW_TEXT_PERCENT
 } = CONFIG
 
-const createGridPositionArray = (a, b) => {
-  // 初始化一个12x9的空数组
-  const grid = []
-  // 使用嵌套循环填充坐标值
-  for (let x = 0; x < a; x++) {
-    for (let y = 0; y < b; y++) {
-      // 这里我们将每个坐标值设置为 [x, y]
-      grid.push([x * UNIT, y * UNIT])
-    }
-  }
+// const createGridPositionArray = (a, b) => {
+//   // 初始化一个12x9的空数组
+//   const grid = []
+//   // 使用嵌套循环填充坐标值
+//   for (let x = 0; x < a; x++) {
+//     for (let y = 0; y < b; y++) {
+//       // 这里我们将每个坐标值设置为 [x, y]
+//       grid.push([x * UNIT, y * UNIT])
+//     }
+//   }
 
-  return grid
-}
+//   return grid
+// }
 
-const posArr = createGridPositionArray(
-  CONFIG.GRID_MATRIX_LENGTH[0],
-  CONFIG.GRID_MATRIX_LENGTH[1]
-)
+// const posArr = createGridPositionArray(
+//   CONFIG.GRID_MATRIX_LENGTH[0],
+//   CONFIG.GRID_MATRIX_LENGTH[1]
+// )
+const [A, B] = GRID_MATRIX_LENGTH
+const mockData = new Array(Math.floor(A * B * SHOW_TEXT_PERCENT))
 
-const mockData = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-
-function CanvasWrapper(props: Props) {
+function CanvasInner(props: Props) {
   const ref = useRef(null)
+  const [posArr, setPos] = useState([])
 
   useEffect(() => {
     const plane = ref.current
@@ -64,8 +73,6 @@ function CanvasWrapper(props: Props) {
       const pos = plane.attributes.position
       const nor = plane.attributes.normal
       const uv = plane.attributes.uv
-
-      console.log('pos', pos, pos.getX(0), pos.getY(0), pos.getZ(0))
 
       var simplex = new SimplexNoise()
 
@@ -116,6 +123,13 @@ function CanvasWrapper(props: Props) {
 
       // register all updates
       pos.needsUpdate = true
+
+      const maxPos = filterMaxZWithoutAdjacentPoint(
+        plane.attributes.position,
+        mockData.length
+      )
+      setPos(maxPos)
+
       nor.needsUpdate = true
       uv.needsUpdate = true
     }
@@ -144,6 +158,19 @@ function CanvasWrapper(props: Props) {
             // size={100}
           />
         </meshPhysicalMaterial>
+
+        {posArr.map(([x, y, z], i) => {
+          const boxPosition = [x, 1, z]
+          const terrainPosition = [x, 0, z]
+          return (
+            <group key={i}>
+              <Boxes position={[x, y, z]} />
+              {/* <Terrain position={terrainPosition} /> */}
+              <Title text="hello" start={[x, y, z]} end={boxPosition} />
+              {/* <Title text="hello" start={terrainPosition} end={boxPosition} /> */}
+            </group>
+          )
+        })}
       </mesh>
 
       {/* <mesh>
@@ -162,20 +189,8 @@ function CanvasWrapper(props: Props) {
         colors={['#e63946', '#f1faee', '#a8dadc']}
         size={100}
       /> */}
-
-      {/* {posArr.map(([x, z], i) => {
-        const boxPosition = [x, 1, z]
-        const terrainPosition = [x, 0, z]
-        return (
-          <group key={i}>
-            <Boxes position={boxPosition} />
-            <Terrain position={terrainPosition} />
-            <Title text="hello" start={terrainPosition} end={boxPosition} />
-          </group>
-        )
-      })} */}
     </>
   )
 }
 
-export default CanvasWrapper
+export default CanvasInner

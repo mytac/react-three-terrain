@@ -6,7 +6,7 @@ import Controls from './components/Controls'
 import { OrbitControls, TransformControls } from 'three-stdlib'
 import { AxesHelper } from './helper'
 import { Terrain, EllipticalPlatform, Boxes, Title } from './components'
-import CanvasWrapper from './Canvas'
+import CanvasInner from './CanvasInner'
 import * as CONFIG from './CONFIG'
 import './styles.css'
 
@@ -45,12 +45,13 @@ createRoot(document.getElementById('root')).render(
     <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
       <AxesHelper />
       <Controls />
-      <ambientLight intensity={0.5} />
-      <pointLight
+      {/* <ambientLight intensity={0.5} /> */}
+      <directionalLight
+        color="#fff"
         position={[0, PONIT_LIGHT_HEIGHT, 0]}
         intensity={POINT_LIGHT_INTENSITY}
       />
-      <CanvasWrapper />
+      <CanvasInner />
     </Canvas>
     {/* <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
       <AxesHelper />
