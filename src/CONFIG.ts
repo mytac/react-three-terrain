@@ -1,17 +1,19 @@
+/* ---------------------------------- */
+/** 显示文字的比例 */
+export const SHOW_TEXT_PERCENT = 0.2
 /*----------------地块----------------- */
 /** 单位大小*/
 export const UNIT = 2
 /** 地块矩阵维度*/
-export const GRID_MATRIX_LENGTH = [3, 3] // x,y
+export const GRID_MATRIX_LENGTH = [12, 9] // x,y
 /** 打开wireframe */
 // export const WIREFRAME = true
 export const WIREFRAME = false
 
-export const SEGMENT = 128
+export const SEGMENT = 512
 // export const TEXTURE_IMAGE = 'round1.png'
 export const TEXTURE_IMAGE = 'image5.jpg'
-
-export const GRADIENT_STOP = [0.1, 0.33, 0.345, 0.35, 0.351, 0.7, 0.8, 0.9]
+export const GRADIENT_STOP = [0.2, 0.33, 0.345, 0.35, 0.351, 0.7, 0.85, 0.95]
 // export const GRADIENT_STOP = [0.2, 0.25, 0.3, 0.649, 0.65, 0.655, 0.67, 0.8]
 // export const GRADIENT_COLOR = [
 //   'white',
@@ -36,8 +38,9 @@ export const GRADIENT_COLOR = [
 
 /* --------------直方图--------------------- */
 /** 直方图宽度*/
-export const GRAM_WIDTH = 0.15
+export const GRAM_WIDTH = 0.1
 export const SHOW_GRAM = true
+export const HEIGHT_WEIGHT = 0.5
 
 /* --------------文字--------------------- */
 /** 是否显示文字 */
@@ -45,21 +48,23 @@ export const SHOW_TITLE = true
 /** 文字高度  */
 export const TEXT_HEIGHT = 2
 /** 文字大小  */
-export const FONT_SIZE = 0.4
+export const FONT_SIZE = 0.8
 
 /* --------------连线--------------------- */
 /** 连线颜色 */
 export const LINE_COLOR = 'grey'
 /** 偏移单位 */
-export const OFFSET_UNIT = 1
+export const OFFSET_UNIT = 2
+// export const OFFSET_UNIT = 1
+export const ADJACENT_RADIUS = 1.2
 
 /*---------------镜头---------------------*/
 /** 镜头定位 */
 export const CAMERA_POSITION = [8, 15, 8]
 
 /* --------------灯光--------------------- */
-export const POINT_LIGHT_INTENSITY = 250
-export const PONIT_LIGHT_HEIGHT = 10
+export const POINT_LIGHT_INTENSITY = 3
+export const PONIT_LIGHT_HEIGHT = 1
 
 /** shader */
 export const XSHADER_VERTEXT = `
