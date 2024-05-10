@@ -2,7 +2,7 @@
 /** 单位大小*/
 export const UNIT = 2
 /** 地块矩阵维度*/
-export const GRID_MATRIX_LENGTH = [9, 9] // x,y
+export const GRID_MATRIX_LENGTH = [3, 3] // x,y
 /** 打开wireframe */
 // export const WIREFRAME = true
 export const WIREFRAME = false
@@ -10,6 +10,29 @@ export const WIREFRAME = false
 export const SEGMENT = 128
 // export const TEXTURE_IMAGE = 'round1.png'
 export const TEXTURE_IMAGE = 'image5.jpg'
+
+export const GRADIENT_STOP = [0.1, 0.33, 0.345, 0.35, 0.351, 0.7, 0.8, 0.9]
+// export const GRADIENT_STOP = [0.2, 0.25, 0.3, 0.649, 0.65, 0.655, 0.67, 0.8]
+// export const GRADIENT_COLOR = [
+//   'white',
+//   'darkseagreen',
+//   'seagreen',
+//   'forestgreen',
+//   'yellow',
+//   'royalblue',
+//   'blue',
+//   'black'
+// ]
+export const GRADIENT_COLOR = [
+  'black',
+  'blue',
+  'royalblue',
+  'yellow',
+  'forestgreen',
+  'seagreen',
+  'darkseagreen',
+  'white'
+]
 
 /* --------------直方图--------------------- */
 /** 直方图宽度*/

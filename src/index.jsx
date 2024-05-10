@@ -42,7 +42,16 @@ const posArr = createGridPositionArray(
 // const posArr = createGridPositionArray(1, 1)
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <CanvasWrapper />
+    <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
+      <AxesHelper />
+      <Controls />
+      <ambientLight intensity={0.5} />
+      <pointLight
+        position={[0, PONIT_LIGHT_HEIGHT, 0]}
+        intensity={POINT_LIGHT_INTENSITY}
+      />
+      <CanvasWrapper />
+    </Canvas>
     {/* <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
       <AxesHelper />
       <Controls />
