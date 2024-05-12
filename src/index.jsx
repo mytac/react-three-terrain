@@ -40,38 +40,25 @@ const posArr = createGridPositionArray(
   CONFIG.GRID_MATRIX_LENGTH[1]
 )
 // const posArr = createGridPositionArray(1, 1)
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
-      <AxesHelper />
-      <Controls />
-      {/* <ambientLight intensity={0.5} /> */}
-      <directionalLight
-        color="#fff"
-        position={[0, PONIT_LIGHT_HEIGHT, 0]}
-        intensity={POINT_LIGHT_INTENSITY}
-      />
-      <CanvasInner />
-    </Canvas>
-    {/* <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
-      <AxesHelper />
-      <Controls />
-      <ambientLight intensity={0.5} />
-      <pointLight
-        position={[0, PONIT_LIGHT_HEIGHT, 0]}
-        intensity={POINT_LIGHT_INTENSITY}
-      />
-      {posArr.map(([x, z], i) => {
-        const boxPosition = [x, 1, z]
-        const terrainPosition = [x, 0, z]
-        return (
-          <group key={i}>
-            <Boxes position={boxPosition} />
-            <Terrain position={terrainPosition} />
-            <Title text="hello" start={terrainPosition} end={boxPosition} />
-          </group>
-        )
-      })}
-    </Canvas> */}
-  </StrictMode>
-)
+
+function create3DGraph(data, elementId = 'root') {
+  createRoot(document.getElementById(elementId)).render(
+    <StrictMode>
+      <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
+        <AxesHelper />
+        <Controls />
+        {/* <ambientLight intensity={0.5} /> */}
+        <directionalLight
+          color="#fff"
+          position={[0, PONIT_LIGHT_HEIGHT, 0]}
+          intensity={POINT_LIGHT_INTENSITY}
+        />
+        <CanvasInner data={data} />
+      </Canvas>
+      {/* <div id="outWrapper">hello</div> */}
+    </StrictMode>
+  )
+}
+
+window.create3DGraph = create3DGraph
+console.log('window.create3DGraph11111')

@@ -13,7 +13,7 @@ import Controls from './components/Controls'
 import { OrbitControls, TransformControls } from 'three-stdlib'
 import { AxesHelper } from './helper'
 import { SimplexNoise } from 'three/addons/math/SimplexNoise.js'
-import { filterMaxZWithoutAdjacentPoint } from './utils'
+import { filterMaxZWithoutAdjacentPoint, handleData } from './utils'
 
 import {
   useTexture,
@@ -27,8 +27,9 @@ import './styles.css'
 extend({ OrbitControls, TransformControls })
 
 interface Props {
-  position: [x: number, y: number, z: number]
-  heightOffset: [a: number, b: number, c: number]
+  // position: [x: number, y: number, z: number]
+  // heightOffset: [a: number, b: number, c: number]
+  data: any
 }
 
 const WIDTH = CONFIG.GRAM_WIDTH
@@ -61,11 +62,16 @@ const {
 //   CONFIG.GRID_MATRIX_LENGTH[1]
 // )
 const [A, B] = GRID_MATRIX_LENGTH
-const mockData = new Array(Math.floor(A * B * SHOW_TEXT_PERCENT))
+// const mockData = new Array(Math.floor(A * B * SHOW_TEXT_PERCENT))
 
 function CanvasInner(props: Props) {
   const ref = useRef(null)
   const [posArr, setPos] = useState([])
+  const [info, setInfo] = useState([])
+
+  useEffect(() => {
+    setInfo(handleData(props.data))
+  }, [props.data])
 
   useEffect(() => {
     const plane = ref.current
@@ -125,12 +131,12 @@ function CanvasInner(props: Props) {
 
       const maxPos = filterMaxZWithoutAdjacentPoint(
         plane.attributes.position,
-        mockData.length
+        props.data.length
       )
       setPos(maxPos)
-      pos.needsUpdate = true
-      nor.needsUpdate = true
-      uv.needsUpdate = true
+      // pos.needsUpdate = true
+      // nor.needsUpdate = true
+      // uv.needsUpdate = true
     }
   }, [])
 
@@ -163,9 +169,9 @@ function CanvasInner(props: Props) {
           const terrainPosition = [x, 0, z]
           return (
             <group key={i}>
-              <Boxes position={[x, y, z]} />
+              <Boxes position={[x, y, z]} heightOffset={info[i].group} />
               {/* <Terrain position={terrainPosition} /> */}
-              <Title text="hello" start={[x, y, z]} end={boxPosition} />
+              <Title start={[x, y, z]} end={boxPosition} text={info[i].title} />
               {/* <Title text="hello" start={terrainPosition} end={boxPosition} /> */}
             </group>
           )

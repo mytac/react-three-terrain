@@ -7,7 +7,7 @@ import * as CONFIG from '../CONFIG'
 
 interface Props {
   position: [x: number, y: number, z: number]
-  heightOffset: [a: number, b: number, c: number]
+  heightOffset: [a: number, b: number, c: number, d: number]
 }
 
 const { UNIT, HEIGHT_WEIGHT } = CONFIG
@@ -21,7 +21,7 @@ function Boxes(props: Props) {
     heightOffset = [Math.random(), Math.random(), Math.random()]
   } = props
   const [x, y, z] = position
-  const [a, b, c] = heightOffset
+  const [a, b, c, d = 0] = heightOffset
 
   const getY = (height: number) => height / 2 + UNIT / 4
   return (
@@ -51,6 +51,15 @@ function Boxes(props: Props) {
         <meshStandardMaterial
           flatShading
           color="green"
+          metalness={0}
+          roughness={0.5}
+        />
+      </mesh>
+      <mesh position={[2 * WIDTH, 0, 0]}>
+        <boxGeometry args={[WIDTH, d * HEIGHT_WEIGHT, WIDTH]} />
+        <meshStandardMaterial
+          flatShading
+          color="orange"
           metalness={0}
           roughness={0.5}
         />

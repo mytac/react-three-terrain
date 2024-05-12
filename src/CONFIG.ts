@@ -10,7 +10,7 @@ export const GRID_MATRIX_LENGTH = [12, 9] // x,y
 // export const WIREFRAME = true
 export const WIREFRAME = false
 
-export const SEGMENT = 512
+export const SEGMENT = 128
 // export const TEXTURE_IMAGE = 'round1.png'
 export const TEXTURE_IMAGE = 'image5.jpg'
 export const GRADIENT_STOP = [0.2, 0.33, 0.345, 0.35, 0.351, 0.7, 0.85, 0.95]
@@ -38,7 +38,7 @@ export const GRADIENT_COLOR = [
 
 /* --------------直方图--------------------- */
 /** 直方图宽度*/
-export const GRAM_WIDTH = 0.1
+export const GRAM_WIDTH = 0.2
 export const SHOW_GRAM = true
 export const HEIGHT_WEIGHT = 0.5
 
@@ -48,7 +48,7 @@ export const SHOW_TITLE = true
 /** 文字高度  */
 export const TEXT_HEIGHT = 2
 /** 文字大小  */
-export const FONT_SIZE = 0.8
+export const FONT_SIZE = 0.2
 
 /* --------------连线--------------------- */
 /** 连线颜色 */

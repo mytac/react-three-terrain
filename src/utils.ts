@@ -73,3 +73,18 @@ export const filterMaxZWithoutAdjacentPoint = (position, sum: number) => {
 
   return result
 }
+
+/**  处理输入 */
+export const handleData = (data) => {
+  const newData = data.map(({ ipc, ipcTitle, groups }) => {
+    const total = groups.reduce((prev, cur, i) => {
+      return prev + cur.value
+    }, 0)
+    return {
+      title: ipcTitle,
+      total,
+      groups: groups.map((a) => a.value)
+    }
+  })
+  return newData
+}

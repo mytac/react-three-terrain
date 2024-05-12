@@ -22,7 +22,9 @@ function Title(props: Props) {
   return (
     <>
       <Billboard position={afterOffsetPosition}>
-        <Text fontSize={FONT_SIZE}>{text}</Text>
+        <Text fontSize={FONT_SIZE} color="white">
+          {text}
+        </Text>
       </Billboard>
       <Line
         points={[start, afterOffsetPosition]}
