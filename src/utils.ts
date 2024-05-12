@@ -88,3 +88,35 @@ export const handleData = (data) => {
   })
   return newData
 }
+
+export const wrapText = (text, maxCharsPerLine = 10) => {
+  if (text.length <= maxCharsPerLine) {
+    // 如果字符串长度小于或等于每行的最大字数，则无需折行
+    return text
+  }
+
+  let wrappedText = ''
+  let startIndex = 0
+
+  // 循环遍历字符串，每次处理最大字数长度的子串
+  while (startIndex < text.length) {
+    // 计算当前行的结束位置，确保不超过原字符串长度
+    let endIndex = startIndex + maxCharsPerLine
+    if (endIndex > text.length) {
+      endIndex = text.length
+    }
+
+    // 截取子串并添加到折行文本中
+    wrappedText += text.substring(startIndex, endIndex) + '\n'
+
+    // 更新下一行的起始位置
+    startIndex = endIndex
+  }
+
+  // 移除末尾的换行符（如果有的话）
+  if (wrappedText.endsWith('\n')) {
+    wrappedText = wrappedText.slice(0, -1)
+  }
+
+  return wrappedText
+}

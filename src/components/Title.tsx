@@ -3,7 +3,7 @@ import { Billboard, Text, TrackballControls, Line } from '@react-three/drei'
 import { useFrame, Canvas } from '@react-three/fiber'
 
 import * as CONFIG from '../CONFIG'
-import { getGridTextOffset } from '../utils'
+import { getGridTextOffset, wrapText } from '../utils'
 
 interface Props {
   text: string
@@ -22,8 +22,12 @@ function Title(props: Props) {
   return (
     <>
       <Billboard position={afterOffsetPosition}>
-        <Text fontSize={FONT_SIZE} color="white">
-          {text}
+        <Text
+          fontSize={FONT_SIZE}
+          color="white"
+          anchorX="center"
+          anchorY="middle">
+          {wrapText(text)}
         </Text>
       </Billboard>
       <Line
