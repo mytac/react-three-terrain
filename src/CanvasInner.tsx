@@ -13,7 +13,7 @@ import Controls from './components/Controls'
 import { OrbitControls, TransformControls } from 'three-stdlib'
 import { AxesHelper } from './helper'
 import { SimplexNoise } from 'three/addons/math/SimplexNoise.js'
-import { filterMaxZWithoutAdjacentPoint, handleData } from './utils'
+import { filterMaxZWithoutAdjacentPoint, handleData, fetchData } from './utils'
 
 import {
   useTexture,
@@ -27,9 +27,7 @@ import './styles.css'
 extend({ OrbitControls, TransformControls })
 
 interface Props {
-  // position: [x: number, y: number, z: number]
-  // heightOffset: [a: number, b: number, c: number]
-  data: any
+  data: Array<any>
 }
 
 const WIDTH = CONFIG.GRAM_WIDTH
@@ -70,12 +68,8 @@ function CanvasInner(props: Props) {
   const [info, setInfo] = useState([])
 
   useEffect(() => {
-    setInfo(handleData(props.data))
-  }, [props.data])
-
-  useEffect(() => {
     const plane = ref.current
-    if (plane) {
+    if (plane && props.data) {
       const pos = plane.attributes.position
       const nor = plane.attributes.normal
       const uv = plane.attributes.uv
@@ -131,9 +125,12 @@ function CanvasInner(props: Props) {
 
       const maxPos = filterMaxZWithoutAdjacentPoint(
         plane.attributes.position,
-        props.data.length
+        Math.floor(props.data.length * SHOW_TEXT_PERCENT)
       )
+      console.log('maxPos', maxPos)
       setPos(maxPos)
+      setInfo(handleData(props.data))
+
       // pos.needsUpdate = true
       // nor.needsUpdate = true
       // uv.needsUpdate = true

@@ -41,7 +41,7 @@ const posArr = createGridPositionArray(
 )
 // const posArr = createGridPositionArray(1, 1)
 
-function create3DGraph(data, elementId = 'root') {
+function create3DGraph(data, elementId) {
   createRoot(document.getElementById(elementId)).render(
     <StrictMode>
       <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
@@ -61,4 +61,3 @@ function create3DGraph(data, elementId = 'root') {
 }
 
 window.create3DGraph = create3DGraph
-console.log('window.create3DGraph11111')

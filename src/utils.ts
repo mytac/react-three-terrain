@@ -1,7 +1,13 @@
 import * as CONFIG from './CONFIG'
 
-const { OFFSET_UNIT, UNIT, GRID_MATRIX_LENGTH, TEXT_HEIGHT, ADJACENT_RADIUS } =
-  CONFIG
+const {
+  OFFSET_UNIT,
+  UNIT,
+  GRID_MATRIX_LENGTH,
+  TEXT_HEIGHT,
+  ADJACENT_RADIUS,
+  SHOW_TEXT_PERCENT
+} = CONFIG
 
 /** 边缘检测 */
 const isEdge = ([x, y, z]) => {
@@ -86,7 +92,14 @@ export const handleData = (data) => {
       groups: groups.map((a) => a.value)
     }
   })
-  return newData
+
+  newData.sort((a, b) => a.total - b.total)
+  const result = newData.slice(
+    0,
+    Math.floor(newData.length * SHOW_TEXT_PERCENT)
+  )
+  console.log('result', result)
+  return result
 }
 
 export const wrapText = (text, maxCharsPerLine = 10) => {
@@ -119,4 +132,18 @@ export const wrapText = (text, maxCharsPerLine = 10) => {
   }
 
   return wrappedText
+}
+
+export const fetchData = async (config) => {
+  const { url, params, token } = config
+  const response = await fetch(url, {
+    method: 'post',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/json',
+      body: JSON.stringify(params),
+      mode: 'no-cors'
+    }
+  })
+  return response.json()
 }
