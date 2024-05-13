@@ -94,12 +94,11 @@ export const handleData = (data) => {
   })
 
   newData.sort((a, b) => a.total - b.total)
-  const result = newData.slice(
-    0,
-    Math.floor(newData.length * SHOW_TEXT_PERCENT)
-  )
-  console.log('result', result)
-  return result
+  // const result = newData.slice(
+  //   0,
+  //   Math.floor(newData.length * SHOW_TEXT_PERCENT)
+  // )
+  return newData
 }
 
 export const wrapText = (text, maxCharsPerLine = 10) => {

@@ -41,24 +41,6 @@ const {
   SHOW_TEXT_PERCENT
 } = CONFIG
 
-// const createGridPositionArray = (a, b) => {
-//   // 初始化一个12x9的空数组
-//   const grid = []
-//   // 使用嵌套循环填充坐标值
-//   for (let x = 0; x < a; x++) {
-//     for (let y = 0; y < b; y++) {
-//       // 这里我们将每个坐标值设置为 [x, y]
-//       grid.push([x * UNIT, y * UNIT])
-//     }
-//   }
-
-//   return grid
-// }
-
-// const posArr = createGridPositionArray(
-//   CONFIG.GRID_MATRIX_LENGTH[0],
-//   CONFIG.GRID_MATRIX_LENGTH[1]
-// )
 const [A, B] = GRID_MATRIX_LENGTH
 // const mockData = new Array(Math.floor(A * B * SHOW_TEXT_PERCENT))
 
@@ -125,7 +107,7 @@ function CanvasInner(props: Props) {
 
       const maxPos = filterMaxZWithoutAdjacentPoint(
         plane.attributes.position,
-        Math.floor(props.data.length * SHOW_TEXT_PERCENT)
+        props.data.length
       )
       console.log('maxPos', maxPos)
       setPos(maxPos)
@@ -164,33 +146,23 @@ function CanvasInner(props: Props) {
         {posArr.map(([x, y, z], i) => {
           const boxPosition = [x, 1, z]
           const terrainPosition = [x, 0, z]
+          const showText = i < Math.floor(posArr.length * SHOW_TEXT_PERCENT)
           return (
             <group key={i}>
               <Boxes position={[x, y, z]} heightOffset={info[i].group} />
               {/* <Terrain position={terrainPosition} /> */}
-              <Title start={[x, y, z]} end={boxPosition} text={info[i].title} />
+              {showText && (
+                <Title
+                  start={[x, y, z]}
+                  end={boxPosition}
+                  text={info[i].title}
+                />
+              )}
               {/* <Title text="hello" start={terrainPosition} end={boxPosition} /> */}
             </group>
           )
         })}
       </mesh>
-
-      {/* <mesh>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshPhysicalMaterial>
-          <GradientTexture
-            stops={[0, 0.8, 1]}
-            colors={['#e63946', '#f1faee', '#a8dadc']}
-            size={100}
-          />
-        </meshPhysicalMaterial>
-      </mesh> */}
-
-      {/* <GradientTexture
-        stops={[0, 0.8, 1]}
-        colors={['#e63946', '#f1faee', '#a8dadc']}
-        size={100}
-      /> */}
     </>
   )
 }
