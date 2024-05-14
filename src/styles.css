@@ -14,3 +14,14 @@ body,
   right: 0;
   /* background: rgba(255, 255, 255, 0.5); */
 }
+
+.titleWrapper {
+  max-width: 100px;
+  max-height: 48px;
+  overflow: hidden;
+  color: #fff;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  padding: 3px;
+}

@@ -1,3 +1,4 @@
+import * as THREE from 'three'
 import * as CONFIG from './CONFIG'
 
 const {
@@ -145,4 +146,73 @@ export const fetchData = async (config) => {
     }
   })
   return response.json()
+}
+
+/** 将3D位置转换为2D屏幕坐标的函数   */
+export const worldToScreen = (position, camera, size) => {
+  // position 是你想要转换的3D物体位置（世界空间）
+  // 将世界空间位置转换为相机空间位置
+  const positionCameraSpace = position
+    .clone()
+    .applyMatrix4(camera.matrixWorldInverse)
+
+  positionCameraSpace.project(camera)
+
+  // 将NDC转换为屏幕坐标（像素）
+  positionCameraSpace.x = ((positionCameraSpace.x + 1) * size.width) / 2
+  positionCameraSpace.y = (-(positionCameraSpace.y - 1) * size.height) / 2
+
+  console.log('positionCameraSpace', positionCameraSpace)
+
+  return positionCameraSpace
+
+  // // 将相机空间位置转换为标准化设备坐标 (NDC)
+  // const positionNDC = new THREE.Vector4()
+  // positionNDC.set(
+  //   positionCameraSpace.x,
+  //   positionCameraSpace.y,
+  //   -positionCameraSpace.z,
+  //   1
+  // )
+  // positionNDC.applyMatrix4(camera.projectionMatrix)
+
+  // // 将NDC转换为屏幕坐标（注意这里的y需要倒置，因为NDC的y是[-1, 1]，而屏幕坐标的y是[height, 0]）
+  // const width = window.innerWidth
+  // const height = window.innerHeight
+  // const x = ((positionNDC.x + 1) * width) / 2
+  // const y = ((1 - positionNDC.y) * height) / 2
+
+  // console.log(x, y, width, height)
+
+  // // 检查坐标是否在视口内
+  // if (x < 0 || x > width || y < 0 || y > height) {
+  //   // 坐标可能不在视口内，你可能需要处理这种情况
+  //   return null
+  // }
+
+  // // 返回屏幕坐标
+  // return { x, y }
+}
+
+/** 在某个坐标位置创建div */
+export const createTextOnPosition = (text: string, x: number, y: number) => {
+  // 创建一个新的div元素
+  const div = document.createElement('div')
+  div.className = 'titleWrapper'
+  div.title = text
+  // 设置div的文本内容
+  div.textContent = text
+
+  // 设置div的样式为绝对定位
+  div.style.position = 'absolute'
+
+  // 通过形参设置div的top和left样式
+  div.style.top = y - 20 + 'px' // 假设传入的top是数值，如果不是，则需要相应的处理
+  div.style.left = x - 50 + 'px' // 同样，假设传入的left是数值
+
+  // 将div添加到body的末尾（或者你可以根据需要添加到其他元素中）
+  const outWrapper = document.getElementById('outWrapper')
+  if (outWrapper) {
+    outWrapper?.appendChild(div)
+  }
 }

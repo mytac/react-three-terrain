@@ -1,4 +1,5 @@
 /* ---------------------------------- */
+export const SHOW_AXIS_HELPER = false
 /** 显示文字的比例 */
 export const SHOW_TEXT_PERCENT = 0.2
 /*----------------地块----------------- */
@@ -14,17 +15,7 @@ export const SEGMENT = 128
 // export const TEXTURE_IMAGE = 'round1.png'
 export const TEXTURE_IMAGE = 'image5.jpg'
 export const GRADIENT_STOP = [0.2, 0.33, 0.345, 0.35, 0.351, 0.7, 0.85, 0.95]
-// export const GRADIENT_STOP = [0.2, 0.25, 0.3, 0.649, 0.65, 0.655, 0.67, 0.8]
-// export const GRADIENT_COLOR = [
-//   'white',
-//   'darkseagreen',
-//   'seagreen',
-//   'forestgreen',
-//   'yellow',
-//   'royalblue',
-//   'blue',
-//   'black'
-// ]
+
 export const GRADIENT_COLOR = [
   'black',
   'blue',
@@ -54,39 +45,14 @@ export const FONT_SIZE = 0.2
 /** 连线颜色 */
 export const LINE_COLOR = 'grey'
 /** 偏移单位 */
-export const OFFSET_UNIT = 2
+export const OFFSET_UNIT = 1.5
 // export const OFFSET_UNIT = 1
-export const ADJACENT_RADIUS = 1.2
+export const ADJACENT_RADIUS = 6
 
 /*---------------镜头---------------------*/
 /** 镜头定位 */
-export const CAMERA_POSITION = [8, 15, 8]
+export const CAMERA_POSITION = [0, 18, 0]
 
 /* --------------灯光--------------------- */
 export const POINT_LIGHT_INTENSITY = 3
 export const PONIT_LIGHT_HEIGHT = 1
-
-/** shader */
-export const XSHADER_VERTEXT = `
-uniform sampler2D heightMap;
-			uniform float heightRatio;
-			varying vec2 vUv;
-			varying float hValue;
-			varying vec3 cl;
-			void main() {
-			    vUv = uv;
-			    vec3 pos = position;
-		        cl = texture2D(heightMap, vUv).rgb;
-		        hValue = texture2D(heightMap, vUv).r;
-		        pos.y = hValue * heightRatio;
-		        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos,1.0);
-		    }`
-
-export const XSHADER_FRAGMENT = `
-varying float hValue;
-			varying vec3 cl;
-			void main() {
-		 		float v = abs(hValue - 1.);
-		 		gl_FragColor = vec4(cl, .8 - v * v) ; 
-		    }
-`

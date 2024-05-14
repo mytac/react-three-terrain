@@ -45,7 +45,7 @@ function create3DGraph(data, elementId) {
   createRoot(document.getElementById(elementId)).render(
     <StrictMode>
       <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
-        <AxesHelper />
+        {CONFIG.SHOW_AXIS_HELPER && <AxesHelper />}
         <Controls />
         {/* <ambientLight intensity={0.5} /> */}
         <directionalLight
@@ -55,7 +55,7 @@ function create3DGraph(data, elementId) {
         />
         <CanvasInner data={data} />
       </Canvas>
-      {/* <div id="outWrapper">hello</div> */}
+      <div id="outWrapper">hello</div>
     </StrictMode>
   )
 }
