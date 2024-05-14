@@ -119,6 +119,16 @@ function CanvasInner(props: Props) {
     }
   }, [])
 
+  useEffect(() => {
+    document.addEventListener('touchstart', preventBehavior, { passive: false })
+    document.addEventListener('touchmove', preventBehavior, { passive: false })
+    document.addEventListener('wheel', preventBehavior, { passive: false })
+
+    function preventBehavior(e) {
+      e.preventDefault()
+    }
+  }, [])
+
   return (
     <>
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
