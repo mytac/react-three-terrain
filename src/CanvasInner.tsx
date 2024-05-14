@@ -28,6 +28,7 @@ extend({ OrbitControls, TransformControls })
 
 interface Props {
   data: Array<any>
+  rootElement: string
 }
 
 const WIDTH = CONFIG.GRAM_WIDTH
@@ -42,7 +43,6 @@ const {
 } = CONFIG
 
 const [A, B] = GRID_MATRIX_LENGTH
-// const mockData = new Array(Math.floor(A * B * SHOW_TEXT_PERCENT))
 
 function CanvasInner(props: Props) {
   const ref = useRef(null)
@@ -109,23 +109,13 @@ function CanvasInner(props: Props) {
         plane.attributes.position,
         props.data.length
       )
-      console.log('maxPos', maxPos)
+
       setPos(maxPos)
       setInfo(handleData(props.data))
 
-      // pos.needsUpdate = true
-      // nor.needsUpdate = true
-      // uv.needsUpdate = true
-    }
-  }, [])
-
-  useEffect(() => {
-    document.addEventListener('touchstart', preventBehavior, { passive: false })
-    document.addEventListener('touchmove', preventBehavior, { passive: false })
-    document.addEventListener('wheel', preventBehavior, { passive: false })
-
-    function preventBehavior(e) {
-      e.preventDefault()
+      pos.needsUpdate = true
+      nor.needsUpdate = true
+      uv.needsUpdate = true
     }
   }, [])
 
@@ -160,15 +150,14 @@ function CanvasInner(props: Props) {
           return (
             <group key={i}>
               <Boxes position={[x, y, z]} heightOffset={info[i].group} />
-              {/* <Terrain position={terrainPosition} /> */}
               {showText && (
                 <Title
                   start={[x, y, z]}
                   end={boxPosition}
                   text={info[i].title}
+                  rootElement={props.rootElement}
                 />
               )}
-              {/* <Title text="hello" start={terrainPosition} end={boxPosition} /> */}
             </group>
           )
         })}

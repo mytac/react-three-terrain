@@ -78,6 +78,8 @@ export const filterMaxZWithoutAdjacentPoint = (position, sum: number) => {
     }
   }
 
+  console.log('result', result)
+
   return result
 }
 
@@ -162,40 +164,16 @@ export const worldToScreen = (position, camera, size) => {
   positionCameraSpace.x = ((positionCameraSpace.x + 1) * size.width) / 2
   positionCameraSpace.y = (-(positionCameraSpace.y - 1) * size.height) / 2
 
-  console.log('positionCameraSpace', positionCameraSpace)
-
   return positionCameraSpace
-
-  // // 将相机空间位置转换为标准化设备坐标 (NDC)
-  // const positionNDC = new THREE.Vector4()
-  // positionNDC.set(
-  //   positionCameraSpace.x,
-  //   positionCameraSpace.y,
-  //   -positionCameraSpace.z,
-  //   1
-  // )
-  // positionNDC.applyMatrix4(camera.projectionMatrix)
-
-  // // 将NDC转换为屏幕坐标（注意这里的y需要倒置，因为NDC的y是[-1, 1]，而屏幕坐标的y是[height, 0]）
-  // const width = window.innerWidth
-  // const height = window.innerHeight
-  // const x = ((positionNDC.x + 1) * width) / 2
-  // const y = ((1 - positionNDC.y) * height) / 2
-
-  // console.log(x, y, width, height)
-
-  // // 检查坐标是否在视口内
-  // if (x < 0 || x > width || y < 0 || y > height) {
-  //   // 坐标可能不在视口内，你可能需要处理这种情况
-  //   return null
-  // }
-
-  // // 返回屏幕坐标
-  // return { x, y }
 }
 
 /** 在某个坐标位置创建div */
-export const createTextOnPosition = (text: string, x: number, y: number) => {
+export const createTextOnPosition = (
+  text: string,
+  x: number,
+  y: number,
+  rootElement = 'root'
+) => {
   // 创建一个新的div元素
   const div = document.createElement('div')
   div.className = 'titleWrapper'
@@ -211,7 +189,7 @@ export const createTextOnPosition = (text: string, x: number, y: number) => {
   div.style.left = x - 50 + 'px' // 同样，假设传入的left是数值
 
   // 将div添加到body的末尾（或者你可以根据需要添加到其他元素中）
-  const outWrapper = document.getElementById('outWrapper')
+  const outWrapper = document.getElementById(rootElement)
   if (outWrapper) {
     outWrapper?.appendChild(div)
   }

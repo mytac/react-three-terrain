@@ -12,50 +12,24 @@ import './styles.css'
 
 extend({ OrbitControls, TransformControls })
 
-// // Add types to ThreeElements elements so primitives pick up on it
-// declare module '@react-three/fiber' {
-//   interface ThreeElements {
-//     customElement: Object3DNode<CustomElement, typeof CustomElement>
-//   }
-// }
-
 const { UNIT, POINT_LIGHT_INTENSITY, PONIT_LIGHT_HEIGHT } = CONFIG
 
-const createGridPositionArray = (a, b) => {
-  // 初始化一个12x9的空数组
-  const grid = []
-  // 使用嵌套循环填充坐标值
-  for (let x = 0; x < a; x++) {
-    for (let y = 0; y < b; y++) {
-      // 这里我们将每个坐标值设置为 [x, y]
-      grid.push([x * UNIT, y * UNIT])
-    }
-  }
-
-  return grid
-}
-
-const posArr = createGridPositionArray(
-  CONFIG.GRID_MATRIX_LENGTH[0],
-  CONFIG.GRID_MATRIX_LENGTH[1]
-)
-// const posArr = createGridPositionArray(1, 1)
-
-function create3DGraph(data, elementId) {
+function create3DGraph(data, elementId, width = 1000, height = 800) {
   createRoot(document.getElementById(elementId)).render(
     <StrictMode>
-      <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
-        {CONFIG.SHOW_AXIS_HELPER && <AxesHelper />}
-        <Controls />
-        {/* <ambientLight intensity={0.5} /> */}
-        <directionalLight
-          color="#fff"
-          position={[0, PONIT_LIGHT_HEIGHT, 0]}
-          intensity={POINT_LIGHT_INTENSITY}
-        />
-        <CanvasInner data={data} />
-      </Canvas>
-      <div id="outWrapper">hello</div>
+      <div style={{ width, height }}>
+        <Canvas camera={{ position: CONFIG.CAMERA_POSITION }}>
+          {CONFIG.SHOW_AXIS_HELPER && <AxesHelper />}
+          {/* <Controls /> */}
+          {/* <ambientLight intensity={0.5} /> */}
+          <directionalLight
+            color="#fff"
+            position={[0, PONIT_LIGHT_HEIGHT, 0]}
+            intensity={POINT_LIGHT_INTENSITY}
+          />
+          <CanvasInner data={data} rootElement={elementId} />
+        </Canvas>
+      </div>
     </StrictMode>
   )
 }

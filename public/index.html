@@ -11,31 +11,51 @@
 
   <body>
     <noscript> You need to enable JavaScript to run this app. </noscript>
-    <div id="root"></div>
+    <div>
+      <p>
+        在产品研发方面，我们打造了覆盖从知识产权创造到价值变现全生命周期的一站式创新平台，围绕创新链条构建了关键产品矩阵：智能检索、智能创新、知产管理、科技情报。
+      </p>
+      <p>
+        针对大量检索调研工作对检索经验和技巧带来的要求，平台通过融合多算法模型，应用跨语种自然语言处理、视觉、知识图谱等技术，实现让用户在检索过程中输入文本或图片，即可一键检索，帮助快速、及时、准确地获取领域创新态势，为研究、创新、保护与维权等活动提供决策依据。
+      </p>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <div id="Chapter_4_2" style="position: relative"></div>
+      </div>
+      <p>
+        通过智能创新平台，发明创新者可在数秒间精准查询全球创新情报，获得目标解决方案，从源头提升创意质量。并且，过去20天左右才能完成的专利申请文件撰写工作，现在平台基于用户创意，2-3天就能完成。且在专利申请前，平台还可真实模拟形式审查和实质审查，输出专业提升建议，为专利申请保驾护航。
+      </p>
+    </div>
     <script defer>
       const config = {
-        // url: 'https://openapi-test.mindflowing.cn/openapi/reportdata/applicant-rank',
         url: 'https://openapi-test.mindflowing.cn/openapi/patent/patent-map',
         token:
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjoiLTEzIiwibyI6Ii0xMyIsImlhdCI6MTcxNTU3MDUwNiwiZXhwIjoxNzE4MTYyNTA2fQ.PLl2ES6tUywLME3rOKouNIR0c0pON3GiWWtG6x0NMew',
-        params: {},
-        elementId: 'root'
+        params: {
+          tacdExpr: `(核电) AND (调峰 OR 调频) AND (瞬态 OR 应力 OR 受力)`
+        },
+        elementId: 'Chapter_4_2',
+        width: 800, // 可选
+        height: 500 // 可选
       }
 
       fetch(config.url, {
         method: 'post',
         headers: {
           Authorization: config.token,
-          'Content-Type': 'application/json',
-          body: JSON.stringify(config.params),
+          'Content-Type': 'application/json;charset=utf-8',
           mode: 'no-cors'
-        }
+        },
+        body: JSON.stringify(config.params)
       })
         .then((resp) => resp.json())
         .then((result) => {
-          console.log('result', result)
           if (result && result.code === 0 && window.create3DGraph) {
-            window.create3DGraph(result.data.data, config.elementId)
+            window.create3DGraph(
+              result.data.data,
+              config.elementId,
+              config.width,
+              config.height
+            )
           }
         })
     </script>

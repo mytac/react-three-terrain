@@ -1,27 +1,11 @@
-html,
-body,
-#root {
-  height: 100%;
-  margin: 0;
-  background: #000000;
-}
-
-#outWrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  /* background: rgba(255, 255, 255, 0.5); */
-}
-
 .titleWrapper {
   max-width: 100px;
-  max-height: 48px;
+  max-height: 46px;
   overflow: hidden;
   color: #fff;
   font-size: 12px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
   padding: 3px;
+  text-overflow: ellipsis;
 }
